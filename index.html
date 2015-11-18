@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>My running</title>
+    
+</head>
+ 
+<body>
+<h1 id="heading">        Avoid the boxes</h1>
+<canvas id="canvas" width="1000" height="500"></canvas>
+<script src="https://code.jquery.com/jquery-2.1.0.js">
+</script>
+<script src="http://cloud.github.com/downloads/scottkiss/H5Draw/H5Draw.js"></script>
+<script>
+var canvas=document.getElementById("canvas");
+var ctx=canvas.getContext("2d");
+var width = canvas.width; 
+var height = canvas.height;
+
+//the color list
+var color={sky:"#BFEFFF",soil1:"#A0522D",soil2:"#B8860B",soil3:"#8B4726",soil4:"#8B7D6B",
+     soil5:"#8B5A2B",soil6:"#A52A2A",soil7:"#8B636C",soil8:"#5D478B",soil9:"#2F4F4F",
+     orange:"#EE6A50",lime:"#7CCD7C",seablue:"#00BFFF",violet:"#B23AEE",sun:"#EE0000"}
+     
+//draw the colorful ball rotation     
+var angle = [10,20,30,40,50,60,70,80,90,100];
+     var alpha = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1];
+     var h5dctx = H5D.D2('canvas');                     
+function colorfulRotation(){
+                     for(var i = 0;i < 100;i++){
+                        if(angle[i]==360){angle[i]=0;}
+                        var mycos=Math.cos((angle[i])*Math.PI/180)
+                        var mysin=Math.sin((angle[i])*Math.PI/180)
+                        var x = 650*mycos+500;var y = 650*mysin+700;
+                        var a = 640*mycos+500;var b = 640*mysin+700;
+                        var c = 630*mycos+500;var d = 630*mysin+700;
+                        var e = 620*mycos+500;var f = 620*mysin+700;
+                        
+                        h5dctx.drawCircle(x,y,20).fill(
+                       {    color:"rgba(255,0,0,"+alpha[i]+")",
+                            shadow:{
+                        }});
+                         h5dctx.drawCircle(a,b,18).fill(
+                       {    color:"rgba(255,125,64,"+alpha[i]+")",
+                            shadow:{
+                        }});
+                        h5dctx.drawCircle(c,d,16).fill(
+                       {    color:"rgba(255,153,18,"+alpha[i]+")",
+                            shadow:{
+                        }});
+                        h5dctx.drawCircle(e,f,14).fill(
+                       {    color:"rgba(255,215,0,"+alpha[i]+")",
+                            shadow:{
+                        }});
+                        angle[i]-=3;
+                    } 
+        }
+                
+//get the running dog picture                    
+var dog=function(x,y){this.x=x;this.y=y;
+     var dogHtml='<img src="http://img1.imgtn.bdimg.com/it/u=2030240881,4158396538&fm=21&gp=0.jpg" width="200" height="30">'
+     this.dogElement=$(dogHtml);
+     this.dogElement.css({position:"absolute",
+     left:this.x,
+     top:this.y});
+     $("body").append(this.dogElement);
+};   
+
+/*function triangle(){
+ctx.fillStyle = "Black";
+var b=Math.floor(Math.random()*50+210)
+var a=Math.floor(Math.random()*1000)
+ctx.moveTo(a,b);
+ctx.lineTo(a+20,b+7);
+ctx.lineTo(a,b+20);
+ctx.lineTo(a,b);
+ctx.fill();
+}
+
+
+function triangle2(a,b){
+ctx.fillStyle = "Black";
+ctx.moveTo(a,b);
+ctx.lineTo(a+20,b+12);
+ctx.lineTo(a,b+24);
+ctx.lineTo(a,b);
+ctx.fill();
+}*/
+
+//set score
+var score=0
+var drawScore = function () {
+     ctx.font = "60px Courier";
+     ctx.fillStyle = "Black";
+     ctx.textAlign = "left";
+     ctx.textBaseline = "top";
+     ctx.fillText("Score: " + score, 20, 20);
+};
+var changeScore=function(){
+     if((position+60)===80 || (position2+60)===80 || position3===120 || position4===120){
+     score+=1
+     }
+}
+
+//game over
+var over="Game Over!!"
+var gameOver = function(){
+     ctx.font = "120px Courier";
+     ctx.fillStyle = "Black";
+     ctx.textAlign = "left";
+     ctx.textBaseline = "top";
+     ctx.fillText(over, 120, 100);
+};
+
+
+//draw circle function
+var circle=function(x,y,radius){
+     ctx.fillStyle="Black";
+     ctx.strokeStyle="Black";
+     ctx.beginPath();
+     ctx.arc(x,y,radius,0,Math.PI*2,true);
+     ctx.fill();
+}
+
+//base of the Mickey Mouse ball
+var Ball=function(){
+     this.x=500;
+     this.y=300;
+     this.radius=25;
+     this.ys=9;
+     this.xs=20;
+}
+
+
+//Mickey Mouse ball
+Ball.prototype.draw=function(){
+     circle(this.x,this.y,this.radius);
+     circle(this.x-20,this.y-25,10);
+     circle(this.x+20,this.y-25,10);
+    
+     }
+     
+function eye(x,y,radius){
+     ctx.fillStyle="White";
+     ctx.strokeStyle="Black";
+     ctx.beginPath();
+     ctx.arc(x,y,radius,0,Math.PI*2,true);
+     ctx.fill();
+     }
+    
+
+//draw the ball
+var ball=new Ball()
+
+//four directions of the ball
+
+var direction = 0;
+var jmp = 0, dir = - 1;
+
+Ball.prototype.jump=function(){
+    if(direction===38){
+	if (jmp == 1) {
+		jmp = 0;
+		direction=0;
+		return;
+	}
+	this.y += dir * this.ys;
+	if (this.y < 200) {
+		dir = - dir;
+		this.y += dir * this.ys;
+	}
+	if (this.y > 300) {
+		dir = - dir;
+		this.y += dir * this.ys;
+		jmp = 1;}
+		}
+	}
+	
+Ball.prototype.down=function(){
+     if(direction===40||((direction===37||direction===39) && this.y<300)){
+     if(dir==-1){this.y-=dir*this.ys;}
+     if(dir==1){this.y+=dir*this.ys;}
+     if(this.y>300){this.y=300} 
+     }
+     }
+     
+Ball.prototype.right=function(){
+     if(this.y===300){
+     this.x+=this.xs;
+     }
+     if(this.x>1000){this.x=1000;this.x-=this.xs}
+     if(this.x<0){this.x=0;this.x+=this.xs}
+     }
+     
+Ball.prototype.left=function(){     
+     if(this.y===300){
+     this.x-=this.xs;
+     }
+     if(this.x>1000){this.x=1000;this.x-=this.xs}
+     if(this.x<0){this.x=0;this.x+=this.xs}
+     }
+    
+//the background
+function frameAndGround(){
+     ctx.lineWidth=10
+     ctx.strokeRect(0,0,width,height);
+     ctx.strokeStyle="Black";
+     ctx.moveTo(0,330);
+     ctx.lineTo(1000,330);
+     ctx.stroke();
+}
+
+
+function blueSky(){
+     ctx.fillStyle=color.sky;
+     ctx.fillRect(0,0,1000,330);
+}
+
+if (color.sky) {  
+  ctx.font = "60px Courier";
+     ctx.fillStyle = "#A0522D";
+     ctx.textAlign = "left";
+     ctx.textBaseline = "top";
+     ctx.fillText("Blue sky~", 700, 20);
+} else {  
+  color.sky = "#BFEFFF";  
+}  
+
+function soil(){
+     ctx.fillStyle=color.soil1;
+     ctx.fillRect(5,335,990,360);
+     ctx.fillStyle=color.soil2;
+     ctx.fillRect(5,360,990,370);
+     ctx.fillStyle=color.soil3;
+     ctx.fillRect(5,370,990,410);
+     ctx.fillStyle=color.soil4;
+     ctx.fillRect(5,410,990,430);
+     ctx.fillStyle=color.soil5;
+     ctx.fillRect(5,430,990,450);
+     ctx.fillStyle=color.soil6;
+     ctx.fillRect(5,440,990,460);
+     ctx.fillStyle=color.soil7;
+     ctx.fillRect(5,460,990,475);
+     ctx.fillStyle=color.soil8;
+     ctx.fillRect(5,475,990,490);
+     ctx.fillStyle=color.soil9;
+     ctx.fillRect(5,490,990,495);     
+}
+
+
+function fourBoxes(){
+ctx.fillStyle=color.orange;
+ctx.fillRect(position,285,60,40);
+position-=10;
+if(position<0){
+position=1000
+};
+if((Math.abs(position-ball.x)<ball.radius || Math.abs(position+60-ball.x)<ball.radius )
+&& ball.y===300)
+{gameOver();clearInterval(launch);}
+eye(position+25,300,10);eye(position+55,300,10);
+circle(position+25,305,5);circle(position+55,295,5);
+
+
+ctx.fillStyle=color.lime;
+ctx.fillRect(position2,285,60,40);
+position2-=10;
+if(position2<0){
+position2=1400
+};
+if((Math.abs(position2-ball.x)<ball.radius || Math.abs(position2+60-ball.x)<ball.radius )
+&& ball.y===300)
+{gameOver();clearInterval(launch);}
+eye(position2+25,300,10);eye(position2+55,300,10);
+circle(position2+25,305,5);circle(position2+55,295,5);
+
+ctx.fillStyle=color.seablue;
+ctx.fillRect(position3,285,60,40);
+position3+=10;
+if(position3>1000){
+position3=-500
+};
+if((Math.abs(position3-ball.x)<ball.radius || Math.abs(position3+60-ball.x)<ball.radius )
+&& ball.y===300)
+{gameOver();clearInterval(launch);}
+eye(position3+5,300,10);eye(position3+35,300,10);
+circle(position3+5,305,5);circle(position3+35,295,5);
+
+ctx.fillStyle=color.violet;
+ctx.fillRect(position4,285,60,40);
+position4+=10;
+     if(position4>1000){
+     position4=-800
+     };
+     if((Math.abs(position4-ball.x)<ball.radius || Math.abs(position4+60-ball.x)<ball.radius )
+        && ball.y===300)
+     {gameOver();clearInterval(launch);}
+     eye(position4+5,300,10);eye(position4+35,300,10);
+     circle(position4+5,305,5);circle(position4+35,295,5);
+}
+
+
+$("body").keydown(
+function(event){
+direction=event.keyCode
+if(direction===39){ball.right();}
+if(direction===37){ball.left()}
+})
+
+var position=1000
+var position2=1400
+var position3=-500
+var position4=-1000
+
+//setInterval
+var launch=setInterval(function(){
+     ctx.clearRect(0,0,width,height);
+
+     ball.jump();
+     ball.down();
+
+     blueSky()
+     soil()
+     ball.draw();
+
+     fourBoxes();
+
+     var mydog=new dog(100,370)
+     colorfulRotation();
+     frameAndGround()
+     drawScore();
+     changeScore();
+     //triangle()
+     //triangle2(600,260)
+     },30
+     )
+
+ </script>
+     
+</body>
+</html>
