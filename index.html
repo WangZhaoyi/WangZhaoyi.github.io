@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-     <title>My running</title>
+     <title>Avoid the monsters</title>
     
 </head>
  
 <body>
-<h1 id="heading">        Avoid the boxes</h1>
-<canvas id="canvas" width="1000" height="500"></canvas>
+<h1 id="heading" class="text" style="text-align:center;"><font color="#FFD700" size="7" face="Bangla MN">Avoid the monsters</font></h1>
+
+<canvas id="canvas" width="1000" height="500" margin: 0 auto></canvas>
 <script src="https://code.jquery.com/jquery-2.1.0.js">
 </script>
 <script src="http://cloud.github.com/downloads/scottkiss/H5Draw/H5Draw.js"></script>
+<body background="http://a1.att.hudong.com/67/78/01300001183507130535782931266.jpg;"  >
 <script>
 var canvas=document.getElementById("canvas");
 var ctx=canvas.getContext("2d");
 var width = canvas.width; 
 var height = canvas.height;
 
+alert("Use 'up' to jump up, and use 'Right' and 'Left' to move on the ground")
 //the color list
 var color={sky:"#BFEFFF",soil1:"#A0522D",soil2:"#B8860B",soil3:"#8B4726",soil4:"#8B7D6B",
      soil5:"#8B5A2B",soil6:"#A52A2A",soil7:"#8B636C",soil8:"#5D478B",soil9:"#2F4F4F",
@@ -66,26 +69,6 @@ var dog=function(x,y){this.x=x;this.y=y;
      $("body").append(this.dogElement);
 };   
 
-/*function triangle(){
-ctx.fillStyle = "Black";
-var b=Math.floor(Math.random()*50+210)
-var a=Math.floor(Math.random()*1000)
-ctx.moveTo(a,b);
-ctx.lineTo(a+20,b+7);
-ctx.lineTo(a,b+20);
-ctx.lineTo(a,b);
-ctx.fill();
-}
-
-
-function triangle2(a,b){
-ctx.fillStyle = "Black";
-ctx.moveTo(a,b);
-ctx.lineTo(a+20,b+12);
-ctx.lineTo(a,b+24);
-ctx.lineTo(a,b);
-ctx.fill();
-}*/
 
 //set score
 var score=0
@@ -221,7 +204,7 @@ if (color.sky) {
      ctx.fillStyle = "#A0522D";
      ctx.textAlign = "left";
      ctx.textBaseline = "top";
-     ctx.fillText("Blue sky~", 700, 20);
+     ctx.fillText("Tip: use space to stop in the sky", 200, 200);
 } else {  
   color.sky = "#BFEFFF";  
 }  
@@ -325,17 +308,19 @@ var launch=setInterval(function(){
 
      fourBoxes();
 
-     var mydog=new dog(100,380)
+     var mydog=new dog(100,430)
      colorfulRotation();
      frameAndGround()
      drawScore();
      changeScore();
-     //triangle()
-     //triangle2(600,260)
      },30
      )
 
  </script>
-     
+  <p style="text-align:center;"><font color="#FFFF00" size="5" face="Bangla MN">Hope you enjoy my game!<font/></p>
+<img scr="http://c1.mtimg.net/1/pvpic/140706/13/EACwpB2_o.jpg" alt="This game is designed to commemorate my childhood. Touch me :) " 
+onmouseover="this.src='http://pic.58pic.com/58pic/15/87/84/56Z58PICPw3_1024.jpg';"
+onmouseout="this.src='http://c1.mtimg.net/1/pvpic/140706/13/EACwpB2_o.jpg';"/>
+   
 </body>
 </html>
