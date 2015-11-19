@@ -7,7 +7,7 @@
  
 <body>
 <h1 id="heading" class="text" style="text-align:center;"><font color="#FFD700" size="7" face="Bangla MN">Avoid the monsters</font></h1>
-
+<hr />
 <canvas id="canvas" width="1000" height="500" margin: 0 auto></canvas>
 <script src="https://code.jquery.com/jquery-2.1.0.js">
 </script>
@@ -136,7 +136,6 @@ function eye(x,y,radius){
 var ball=new Ball()
 
 //four directions of the ball
-
 var direction = 0;
 var jmp = 0, dir = - 1;
 
@@ -230,48 +229,53 @@ function soil(){
      ctx.fillRect(5,490,990,495);     
 }
 
+//four boxes
+var position=1000
+var position2=1400
+var position3=-500
+var position4=-1000
 
 function fourBoxes(){
-ctx.fillStyle=color.orange;
-ctx.fillRect(position,285,60,40);
-position-=10;
-if(position<0){
-position=1000
-};
-if((Math.abs(position-ball.x)<ball.radius || Math.abs(position+60-ball.x)<ball.radius )
-&& ball.y===300)
-{gameOver();clearInterval(launch);}
-eye(position+25,300,10);eye(position+55,300,10);
-circle(position+25,305,5);circle(position+55,295,5);
+     ctx.fillStyle=color.orange;
+     ctx.fillRect(position,285,60,40);
+     position-=10;
+     if(position<0){
+     position=1000
+     };
+     if((Math.abs(position-ball.x)<ball.radius || Math.abs(position+60-ball.x)<ball.radius )
+     && ball.y===300)
+     {gameOver();clearInterval(launch);}
+     eye(position+25,300,10);eye(position+55,300,10);
+     circle(position+25,305,5);circle(position+55,295,5);
 
 
-ctx.fillStyle=color.lime;
-ctx.fillRect(position2,285,60,40);
-position2-=10;
-if(position2<0){
-position2=1400
-};
-if((Math.abs(position2-ball.x)<ball.radius || Math.abs(position2+60-ball.x)<ball.radius )
-&& ball.y===300)
-{gameOver();clearInterval(launch);}
-eye(position2+25,300,10);eye(position2+55,300,10);
-circle(position2+25,305,5);circle(position2+55,295,5);
+     ctx.fillStyle=color.lime;
+     ctx.fillRect(position2,285,60,40);
+     position2-=10;
+     if(position2<0){
+     position2=1400
+     };
+     if((Math.abs(position2-ball.x)<ball.radius || Math.abs(position2+60-ball.x)<ball.radius )
+     && ball.y===300)
+     {gameOver();clearInterval(launch);}
+     eye(position2+25,300,10);eye(position2+55,300,10);
+     circle(position2+25,305,5);circle(position2+55,295,5);
 
-ctx.fillStyle=color.seablue;
-ctx.fillRect(position3,285,60,40);
-position3+=10;
-if(position3>1000){
-position3=-500
-};
-if((Math.abs(position3-ball.x)<ball.radius || Math.abs(position3+60-ball.x)<ball.radius )
-&& ball.y===300)
-{gameOver();clearInterval(launch);}
-eye(position3+5,300,10);eye(position3+35,300,10);
-circle(position3+5,305,5);circle(position3+35,295,5);
+     ctx.fillStyle=color.seablue;
+     ctx.fillRect(position3,285,60,40);
+     position3+=10;
+     if(position3>1000){
+     position3=-500
+     };
+     if((Math.abs(position3-ball.x)<ball.radius || Math.abs(position3+60-ball.x)<ball.radius )
+     && ball.y===300)
+     {gameOver();clearInterval(launch);}
+     eye(position3+5,300,10);eye(position3+35,300,10);
+     circle(position3+5,305,5);circle(position3+35,295,5);
 
-ctx.fillStyle=color.violet;
-ctx.fillRect(position4,285,60,40);
-position4+=10;
+     ctx.fillStyle=color.violet;
+     ctx.fillRect(position4,285,60,40);
+     position4+=10;
      if(position4>1000){
      position4=-800
      };
@@ -282,18 +286,13 @@ position4+=10;
      circle(position4+5,305,5);circle(position4+35,295,5);
 }
 
-
+//keyboard control
 $("body").keydown(
-function(event){
-direction=event.keyCode
-if(direction===39){ball.right();}
-if(direction===37){ball.left()}
-})
-
-var position=1000
-var position2=1400
-var position3=-500
-var position4=-1000
+     function(event){
+     direction=event.keyCode
+     if(direction===39){ball.right();}
+     if(direction===37){ball.left()}
+     })
 
 //setInterval
 var launch=setInterval(function(){
@@ -301,14 +300,12 @@ var launch=setInterval(function(){
 
      ball.jump();
      ball.down();
-
-     blueSky()
-     soil()
+     blueSky();
+     soil();
      ball.draw();
-
      fourBoxes();
 
-     var mydog=new dog(100,430)
+     var mydog=new dog(100,440);
      colorfulRotation();
      frameAndGround()
      drawScore();
@@ -317,10 +314,10 @@ var launch=setInterval(function(){
      )
 
  </script>
-  <p style="text-align:center;"><font color="#FFFF00" size="5" face="Bangla MN">Hope you enjoy my game!<font/></p>
-<img scr="http://c1.mtimg.net/1/pvpic/140706/13/EACwpB2_o.jpg" alt="This game is designed to commemorate my childhood. Touch me :) " 
+<p style="text-align:center;"><font color="#FFFF00" size="5" face="Bangla MN">Hope you enjoy my game!<font/></p>
+<div align="center"><img scr="http://c1.mtimg.net/1/pvpic/140706/13/EACwpB2_o.jpg" alt="This game is designed to commemorate my childhood. Touch me :) " 
 onmouseover="this.src='http://pic.58pic.com/58pic/15/87/84/56Z58PICPw3_1024.jpg';"
-onmouseout="this.src='http://c1.mtimg.net/1/pvpic/140706/13/EACwpB2_o.jpg';"/>
+onmouseout="this.src='http://c1.mtimg.net/1/pvpic/140706/13/EACwpB2_o.jpg';"/><div/>
    
 </body>
 </html>
